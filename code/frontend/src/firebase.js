@@ -1,23 +1,21 @@
 import { initializeApp } from "firebase/app";
-import { getAuth} from "firebase/auth"; 
-import { GoogleAuthProvider } from "firebase/auth"; 
+import { getAuth } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDC12gjZjNQQzhDlSU8UNAu-bVjGlZcEww",
-    authDomain: "class-scheduler-8c2d9.firebaseapp.com",
-    projectId: "class-scheduler-8c2d9",
-    storageBucket: "class-scheduler-8c2d9.firebasestorage.app",
-    messagingSenderId: "1079359850401",
-    appId: "1:1079359850401:web:30b8646ba95dc10cf4ede0",
-    measurementId: "G-BMV69468FD"
-  };
-  
-  const app = initializeApp(firebaseConfig);
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+};
 
-  const auth = getAuth(app); 
-  const provider = new GoogleAuthProvider(); 
+const app = initializeApp(firebaseConfig);
 
-  export { auth}; 
-  export {provider};
-  
-  export default app; 
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+export { auth, provider };
+export default app;
