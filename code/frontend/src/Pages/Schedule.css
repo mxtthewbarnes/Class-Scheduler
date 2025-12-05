@@ -172,7 +172,7 @@
   background: #f9fafb;
 }
 
-/* MAIN CALENDAR PANEL ---------------------------------------- */
+/* MAIN CALENDAR PANEL  */
 .sched-main {
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -181,14 +181,12 @@
 
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%;
-  max-height: none;
+  height: auto;
+  max-height: calc(100vh - 160px);
   min-height: 0;
 
   box-sizing: border-box;
 }
-
-
 
 /* Header above the grid */
 .sched-header {
@@ -236,16 +234,18 @@
   border-color: #bfdbfe;
 }
 
-/* CALENDAR GRID ---------------------------------------------- */
-/* Wider grid so the calendar fills the shell and Friday never gets cut off */
+/* CALENDAR GRID */
 .grid {
   display: grid;
-  grid-template-columns: 120px repeat(5, minmax(0, 1fr));  /* time col + 5 equal day cols */
+  grid-template-columns: 120px repeat(5, minmax(0, 1fr));
   grid-auto-rows: 80px;
   gap: 6px;
   min-height: 100%;
   --slot-h: 80px;
   grid-auto-flow: row;
+
+  /* FIX: prevent rows from stretching when course blocks overflow */
+  align-items: start;
 }
 
 .corner {
@@ -275,11 +275,11 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: 14px;
-  font-size: 17px;         /* a bit bigger */
+  font-size: 17px;
   font-weight: 700;
   color: #0f172a;
 
-  grid-column: 1 !important;  /* always first column, even with course blocks present */
+  grid-column: 1 !important;
 }
 
 /* Empty slots */
@@ -293,11 +293,20 @@
 .course-cell {
   position: relative;
   z-index: 2;
+
+  /* FIX: stop course blocks from stretching rows */
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .course-block {
   margin: 3px;
-  height: calc(100% - 6px);  /* fixed to row height – classes never push rows taller */
+
+  /* FIX: keep inside the row height */
+  height: 100%;
+  max-height: 100%;
+
   border-radius: 12px;
   background: linear-gradient(135deg, #e0f2fe, #bfdbfe);
   border: 1px solid #bfdbfe;

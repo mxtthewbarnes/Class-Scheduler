@@ -158,14 +158,18 @@ export default function Schedule() {
                 </React.Fragment>
               ))}
 
-              {/* Course blocks */}
+              {/* Course blocks — FIXED VERSION */}
               {selected.flatMap((c) => {
-                const { h: sh } = parseTime(c.start);
-                const { h: eh } = parseTime(c.end);
+                const { h: sh, m: sm } = parseTime(c.start);
+                const { h: eh, m: em } = parseTime(c.end);
 
-                const startRow = sh - START_HOUR + 2; // +2 for header row & first time row
-                const durationHours = Math.max(1, eh - sh || 1);
-                const rowSpan = durationHours; // snap to full hours
+                // fractional hour positions
+                const startDecimal = sh + sm / 60;
+                const endDecimal = eh + em / 60;
+
+                // grid placements
+                const startRow = Math.floor(startDecimal - START_HOUR) + 2;
+                const rowSpan = Math.ceil(endDecimal - startDecimal);
 
                 const days = Array.isArray(c.days) ? c.days : [];
                 return days.map((day) => {
