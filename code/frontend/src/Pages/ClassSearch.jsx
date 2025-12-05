@@ -60,10 +60,13 @@ export default function ClassSearch() {
   const [usingMock, setUsingMock] = useState(false);
   const [query, setQuery] = useState("");
 
+  // 🔥 Key change: Read backend URL from environment or fallback to localhost
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+
   useEffect(() => {
     let cancelled = false;
 
-    fetch("http://localhost:3001/api/courses")
+    fetch(`${API_BASE}/api/courses`)
       .then((res) => {
         if (!res.ok) throw new Error("bad status");
         return res.json();
@@ -83,7 +86,7 @@ export default function ClassSearch() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [API_BASE]);
 
   function addToSchedule(course) {
     const key = "selectedCourses";
