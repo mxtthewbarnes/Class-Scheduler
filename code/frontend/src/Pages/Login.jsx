@@ -56,7 +56,7 @@ function Login() {
 			//replace 'schedule' w/ 'dashboard' when dashbaord is compelte
 			//************
 			setTimeout(() => {
-				navigate("/schedule");
+				navigate("/dashboard");
 			  }, 3000);
 
 
